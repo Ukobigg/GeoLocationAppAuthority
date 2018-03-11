@@ -41,24 +41,29 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         Fragment selectedFragment = null;
+                        String title = "";
                         switch (item.getItemId()) {
                             case R.id.navigation_unapproved:
                                 selectedFragment = UnapprovedFragment.newInstance();
+                                title ="New Emergencies";
                                 break;
 
                             case R.id.navigation_approved:
                                 selectedFragment = ApprovedFragment.newInstance();
+                                title ="Approved Emergencies";
                                 break;
 
                             case R.id.navigation_archive:
                                 selectedFragment = ArchiveFragment.newInstance();
-
+                                title ="Archived Emergencies";
                                 break;
 
                         }
                         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                         transaction.replace(R.id.container, selectedFragment);
                         transaction.commit();
+                        getSupportActionBar().setTitle(title);
+                        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_format_list_bulleted_black_24dp);
                         return true;
                     }
                 });
@@ -67,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.container, UnapprovedFragment.newInstance());
         transaction.commit();
+
 
         //Used to select an item programmatically
         //bottomNavigationView.getMenu().getItem(2).setChecked(true);

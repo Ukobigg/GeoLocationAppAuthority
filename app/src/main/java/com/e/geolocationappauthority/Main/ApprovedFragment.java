@@ -26,6 +26,7 @@ import com.e.geolocationappauthority.MS_SQL.ConnectionClass;
 import com.e.geolocationappauthority.MS_SQL.EmergencyModel;
 import com.e.geolocationappauthority.MS_SQL.RecyclerItemClickListener;
 import com.e.geolocationappauthority.R;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import static android.content.ContentValues.TAG;
 
@@ -34,6 +35,7 @@ public class ApprovedFragment extends Fragment {
     ArrayList<EmergencyModel> emergencyModelArrayList;
     private ConnectionClass connectionClass;
     private boolean success = false; // boolean
+
 
     private static final String BUNDLE_EXTRAS = "BUNDLE_EXTRAS";
     private static final String EXTRA_EMERGENCYID = "EXTRA_QUOTE";
@@ -80,6 +82,7 @@ public class ApprovedFragment extends Fragment {
                         String EmergencyType_recycler = emergencyModelArrayList.get(itemPosition).getEmergencytype();
                         String EmergencyStatus_recycler = emergencyModelArrayList.get(itemPosition).getEmergencystatus();
                         String UserID_recycler = emergencyModelArrayList.get(itemPosition).getUserid();
+                        String EmergencyLocation_recycler = emergencyModelArrayList.get(itemPosition).getEmergencylocation();
 
                         Intent intent = new Intent(getActivity().getBaseContext(), ViewMapActivity.class);
                         intent.putExtra("EXTRA_LATITUDE", latitude_recycler);
@@ -88,6 +91,8 @@ public class ApprovedFragment extends Fragment {
                         intent.putExtra("EXTRA_EMERGENCY_TYPE", EmergencyType_recycler);
                         intent.putExtra("EXTRA_USERID", UserID_recycler);
                         intent.putExtra("EXTRA_EMERGENCY_STATUS", EmergencyStatus_recycler);
+                        intent.putExtra("EXTRA_EMERGENCYLOCATION",EmergencyLocation_recycler);
+
                         startActivity(intent);
                     }
 
@@ -178,19 +183,4 @@ public class ApprovedFragment extends Fragment {
         //Refreshpage
     }
 
-    public void onItemClick(int p) {
-        EmergencyModel item = (EmergencyModel) emergencyModelArrayList.get(p);
-        Intent i = new Intent(getActivity(),ViewMapActivity.class);
-        Bundle selectediteminformation = new Bundle();
-        selectediteminformation.putString(EXTRA_EMERGENCYID,String.valueOf(item.getEmergencyid()));
-        selectediteminformation.putString(EXTRA_EMERGENCYTYPE,item.getEmergencytype());
-        selectediteminformation.putString(EXTRA_EMERGENCYSTATUS,item.getEmergencystatus());
-        selectediteminformation.putString(EXTRA_EMERGENCYLOCATION,item.getEmergencylocation());
-        selectediteminformation.putString(EXTRA_DATETIME,item.getDatetime());
-        selectediteminformation.putString(EXTRA_LATITUDE,item.getLatitude());
-        selectediteminformation.putString(EXTRA_LONGITUDE,item.getLongitude());
-
-        i.putExtra(BUNDLE_EXTRAS,selectediteminformation);
-        startActivity(i);
-    }
 }
